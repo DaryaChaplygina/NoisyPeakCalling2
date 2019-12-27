@@ -1,7 +1,7 @@
 # NoisyPeakCalling2
 
 ## Project description
-This is a continuation of the [NoisyPeakCalling](https://github.com/DaryaChaplygina/NoisyPeakCalling/) project. Previously we analyzed an impact of noise in ChIP-seq data on peak calling algorithms performance by using _additive noise model_ (which means that we added control reads to chip-seq reads in some proportion). Here we explore Tulip[[1]](#tulip) tool and apply it to obtain noisy data.
+This is a continuation of the [NoisyPeakCalling](https://github.com/DaryaChaplygina/NoisyPeakCalling/) project. Previously we analyzed an impact of noise in ChIP-seq data on peak calling algorithms performance by using _additive noise model_ (which means that we added control reads to chip-seq reads in some proportion). Here we explore Tulip[[1]](#tulip) tool and apply it to obtain noisy data (_deductive noise model_).
 
 ## Goals and objectives
 The aims of the project:
@@ -72,7 +72,22 @@ The script counts signal-to-noise ratio as ratio of 90 to 10 percentiles of geno
 `snr.sh` is a script that runs `signal_to_noise_estimation.py` on every file from Tulip simulation.
 
 ### Project pipeline
+
+- Download files listed in __data__ 
+- Run `conda env create -f env.yaml` to get all the required programs
+- Install Tulip
+- Run `./prepare_data.sh` to align your ChIP-seq and control reads
+- Run `tulip_analysis.sh` to learn how Tulip model is affected by additive noise model
+- Run `simreads.sh` to create noisy dataset with Tulip (_deductive noise model_) 
+- Run `./peakcalling.sh` to perform peak calling on new dataset
+- Run `snr.sh` to compute SNR rate in new dataset
+
+Some plots from results also require an information about peaks overlaping. You can obtain it from JBR Genome Browser and write it into `result/snr_tulip_noise_model.csv`. 
+
 ## Results
+
+
+
 ## References 
 
 <a name="tulip">[1]</a>  An Zheng, Michael Lamkin, Yutong Qiu, Kevin Ren, Alon Goren, Melissa Gymrek. A flexible simulation toolkit for designing and evaluating ChIP-sequencing experiments. doi: https://doi.org/10.1101/624486
