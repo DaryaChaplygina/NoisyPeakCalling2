@@ -46,19 +46,30 @@ The script creates noisy ChIP-seq dataset by mixing reads from chip and control 
 
 `join_files.sh` is a supplementary script, that is runned by `tulip_analysis.sh` to mix chip and control with specified proportion.
 
-`simreads.sh` takes as input _[name]_ _[peak caller]_ _[n_reads]_ _[ref]_ _[peaks]_ _[tulip model]_, where
-- _name_ is a name for output file (recommended to be a modification name)
-- _peak caller_ is a an identificator of algorithm that created given peak set
+`simreads.sh` takes as input _[name]_ _[peak set name]_ _[n_reads]_ _[ref]_ _[peaks]_ _[tulip model]_, where
+- _name_ is a prefix for output files (recommended to be a modification name)
+- _peak set name_ is a output folder name (recommended be an identificator of algorithm that created given peak set)
 - _n_reads_ is a number of reads to simulate
 - _ref_ is a reference file
 - _peaks_ is a peak set for Tulip simulation
-- _tulip_model_ is a json with Tulip model parameters
+- _tulip_model_ is a json with Tulip model parameters.
 
-`peakcalling.sh`
+The script run Tulip reads simulation, using precomputed peak set and tulip model. It changes one parameter in model (percentage of reads in peaks) to obtain noisy dataset. The result is a set of .fastq files with increasing noise level.
 
-`snr.sh`
+`peakcalling.sh` takes as input _[name]_ _[peak set name]_ _[control]_ _[peak caller]_ _[fdr]_, where
+- _name_ and _peak set name_ should be the same as given to `simreads.sh` script, because this script works with output of `peakcalling.sh`
+- _control_ is aligned control reads
+- _peak caller_ is a peakcalling algorithm (now available macs2, sicer and span)
 
-`signal_to_noise_estimation.py`
+The script runs _peakcaller_ on files from Tulip simulation. Now it is possible to choose only _fdr_ parameter for running.
+
+`signal_to_noise_estimation.py` takes as input _[file]_ _[-d fragment_size]_  _[OPTIONS]_, where
+- _[file]_ is a path to file in .bam format
+- _-d_ is a size of chip fragment (you could obtain it from macs2 logs, for example)
+
+The script counts signal-to-noise ratio as ratio of 90 to 10 percentiles of genome bin coverage distribution (90 to 10 is default settings, but I recommend you to set first number to larger value, like 95% or 99%).
+
+`snr.sh` is a script that runs `signal_to_noise_estimation.py` on every file from Tulip simulation.
 
 ### Project pipeline
 ## Results
