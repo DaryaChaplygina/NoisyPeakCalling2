@@ -30,7 +30,7 @@ if [[ ${peakcaller} == "sicer" ]] ; then
   mv ${control} control.bed 
 fi
 
-for noize in 0.01
+for noize in 0.2 0.1 0.05 0.01 0.007 0.005
   do
     if [[ ${peakcaller} == "macs2" ]] ; then
         macs2 callpeak -t ${file_folder}/bams/${name}_noize${noize/./}.bam \
