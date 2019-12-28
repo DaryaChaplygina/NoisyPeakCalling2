@@ -85,7 +85,31 @@ The script counts signal-to-noise ratio as ratio of 90 to 10 percentiles of geno
 Some plots from results also require an information about peaks overlaping. You can obtain it from JBR Genome Browser and write it into `result/snr_tulip_noise_model.csv`. 
 
 ## Results
+The following plots show that Tulip model parameter _P(B|D) - the probability that a fragment is bound given that it is pulled down_ (calculated as percent of fragments falling within peaks) __is decreasing with noise level increasing__ (aditive noise model). 
+<p align="center">
+  <img src="https://github.com/DaryaChaplygina/NoisyPeakCalling2/blob/master/results/pictures/encode_s_dynamics.png" width="400" />
+  <img src="https://github.com/DaryaChaplygina/NoisyPeakCalling2/blob/master/results/pictures/span_s_dynamics.png" width="400" />
+</p>
 
+Next plots shows simultaneous change of SNR and percent of reads within peaks affected by additive and deductive noise models. As we can see, percent of reads within peaks could vary significantly for the same histone modification and SNR. Therefore, __SNR is not enough to learn the quality of your dataset__. 
+<p align="center">
+  <img src="https://github.com/DaryaChaplygina/NoisyPeakCalling2/blob/master/results/pictures/snr_additive_model_encode.png" width="400" />
+  <img src="https://github.com/DaryaChaplygina/NoisyPeakCalling2/blob/master/results/pictures/snr_deductive_model_encode.png" width="400" />
+</p>
+
+Visualization of peak calling algorithms precision and recall shows that
+- SICER is the precise algorithm when SNR is low
+- SPAN has the biggest recall in low SNR
+- MACS2 is precise but has the lowest recall; and also this algorithms cannot perform peak calling when SNR is lower than 14 (on average)
+<p align="center">
+  <img src="https://github.com/DaryaChaplygina/NoisyPeakCalling2/blob/master/results/pictures/precision_span_peaks.png" width="400" />
+  <img src="https://github.com/DaryaChaplygina/NoisyPeakCalling2/blob/master/results/pictures/recall_span_peaks.png" width="400" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/DaryaChaplygina/NoisyPeakCalling2/blob/master/results/pictures/precision_encode_peaks.png" width="400" />
+  <img src="https://github.com/DaryaChaplygina/NoisyPeakCalling2/blob/master/results/pictures/recall_encode_peaks.png" width="400" />
+</p>
 
 
 ## References 
